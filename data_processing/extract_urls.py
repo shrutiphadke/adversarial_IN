@@ -5,7 +5,7 @@ import json
 from tld import get_tld
 
 
-datafiles = glob.glob("/home/rin/ONR/adversarial_IN/big_data/Twitter/*.csv")
+datafiles = glob.glob("/home/phadke/ONR/ONR/big_data/Twitter/*.csv")
 
 linkframe = pd.DataFrame(columns=['party','link', 'author'])
 
@@ -48,3 +48,5 @@ filtered_link = linkframe.loc[~linkframe['domain'].isin(common_domains)]
 agg_filtered = filtered_link.groupby(['author','domain']).size().reset_index().rename(columns={0:"count"})
 
 print(agg_filtered.head())
+
+agg_filtered.to_csv("/home/phadke/ONR/ONR/lite_data/extracted_urls.csv")
