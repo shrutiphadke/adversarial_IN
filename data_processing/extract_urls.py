@@ -45,6 +45,8 @@ common_domains = ['twitter.com', 'facebook.com', 'google.com', 'm.tech', 'm.sc',
 
 filtered_link = linkframe.loc[~linkframe['domain'].isin(common_domains)]
 
+filtered_link.to_csv("/home/phadke/ONR/ONR/lite_data/extracted_urls_with_links.csv")
+
 agg_filtered = filtered_link.groupby(['author','domain']).size().reset_index().rename(columns={0:"count"})
 
 print(agg_filtered.head())
