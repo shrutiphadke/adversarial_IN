@@ -15,13 +15,21 @@ include_parties = ['BJP', 'INC']
 
 data = pd.read_csv("/home/phadke/ONR/ONR/lite_data/india_July_21.csv", header=0)
 
+add_on = True
+sample_size = 5000
 
-sample_data_bjp = data.loc[data['party']=='BJP'].sample(500)
-sample_data_inc = data.loc[data['party']=='INC'].sample(500)
+if add_on:
+    completed_collection = pd.read_csv("/home/phadke/ONR/ONR/data_collection/sample_data_dec_7.csv", header=0)
+    completed_screens = completed_collection['screen_name'].tolist()
+    data = data.loc[~data['screen_name'].isin(completed_screens)]
+
+
+sample_data_bjp = data.loc[data['party']=='BJP'].sample(sample_size)
+sample_data_inc = data.loc[data['party']=='INC'].sample(sample_size)
 
 sample_data = pd.concat([sample_data_bjp,sample_data_inc])
 
-sample_data.to_csv("/home/phadke/ONR/ONR/data_collection/sample_data_dec_7.csv")
+sample_data.to_csv("/home/phadke/ONR/ONR/data_collection/sample_data_dec_13.csv")
 
 for idx, row in sample_data.iterrows():
     time.sleep(0.6)
@@ -30,7 +38,7 @@ for idx, row in sample_data.iterrows():
     party=row['party']
     state=row['state']
     
-    fname = "/home/phadke/ONR/ONR/big_data/Twitter/" +cid+"_"+screen_name+"_"+party+".csv"
+    fname = "/home/phadke/ONR/ONR/big_data/Twitter/" + cid+"_"+screen_name+"_"+party+".csv"
     
     
     start_time="2020-05-01T01:00:00Z"
