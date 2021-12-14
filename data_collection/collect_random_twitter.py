@@ -13,26 +13,31 @@ idlist = ["1346963316"]
 
 include_parties = ['BJP', 'INC']
 
-data = pd.read_csv("/home/phadke/ONR/ONR/lite_data/india_July_21.csv", header=0)
+data = pd.read_csv("/home/phadke/ONR/ONR/data_collection/sample_data_dec_14_1.csv", header=0)
 
-add_on = True
+add_on = False
 sample_size = 5000
+to_sample = False
 
 if add_on:
     completed_collection = pd.read_csv("/home/phadke/ONR/ONR/data_collection/sample_data_dec_7.csv", header=0)
     completed_screens = completed_collection['screen_name'].tolist()
     data = data.loc[~data['screen_name'].isin(completed_screens)]
 
+if to_sample:
 
-sample_data_bjp = data.loc[data['party']=='BJP'].sample(sample_size)
-sample_data_inc = data.loc[data['party']=='INC'].sample(sample_size)
+    sample_data_bjp = data.loc[data['party']=='BJP'].sample(sample_size)
+    sample_data_inc = data.loc[data['party']=='INC'].sample(sample_size)
 
-sample_data = pd.concat([sample_data_bjp,sample_data_inc])
+    sample_data = pd.concat([sample_data_bjp,sample_data_inc])
 
-sample_data.to_csv("/home/phadke/ONR/ONR/data_collection/sample_data_dec_13.csv")
+    sample_data.to_csv("/home/phadke/ONR/ONR/data_collection/sample_data_dec_13.csv")
+    
+else:
+    sample_data = data
 
 for idx, row in sample_data.iterrows():
-    time.sleep(0.6)
+    time.sleep(1)
     cid = str(row['id_str'])
     screen_name=row['screen_name']
     party=row['party']
