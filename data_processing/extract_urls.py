@@ -3,7 +3,8 @@ import glob
 import numpy as np
 import json
 from tld import get_tld
-
+from pandarallel import pandarallel
+pandarallel.initialize()
 
 datafiles = glob.glob("/home/phadke/ONR/ONR/big_data/Twitter/*.csv")
 
@@ -37,7 +38,7 @@ def get_domain(link):
         fakevar=1
 
 
-linkframe['domain'] = linkframe['link'].apply(lambda x: get_domain(x))
+linkframe['domain'] = linkframe['link'].parallel_apply(lambda x: get_domain(x))
 
 #print(linkframe.head())
 
@@ -45,10 +46,10 @@ common_domains = ['twitter.com', 'facebook.com', 'google.com', 'm.tech', 'm.sc',
 
 filtered_link = linkframe.loc[~linkframe['domain'].isin(common_domains)]
 
-filtered_link.to_csv("/home/phadke/ONR/ONR/lite_data/extracted_urls_with_links.csv")
+filtered_link.to_csv("/home/phadke/ONR/ONR/lite_data/dec15_extracted_urls.csv")
 
 agg_filtered = filtered_link.groupby(['author','domain']).size().reset_index().rename(columns={0:"count"})
 
 print(agg_filtered.head())
 
-agg_filtered.to_csv("/home/phadke/ONR/ONR/lite_data/extracted_urls.csv")
+agg_filtered.to_csv("/home/phadke/ONR/ONR/lite_data/dec15_extracted_domains.csv")
