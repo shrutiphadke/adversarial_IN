@@ -10,7 +10,12 @@ datafiles = glob.glob("/home/phadke/ONR/ONR/big_data/Twitter/*.csv")
 
 linkframe = pd.DataFrame(columns=['party','link', 'author'])
 
+counter = 0
+
 for d in datafiles:
+    if counter%100==0:
+        print(counter)
+    counter+=1
     splitfilename = d.replace(".csv", "").split("_")
     party = splitfilename[len(splitfilename)-1]
     author = splitfilename[len(splitfilename)-2]
@@ -27,7 +32,7 @@ for d in datafiles:
 
 #print(linkframe.head())
 
-
+linkframe.to_csv("/home/phadke/ONR/ONR/lite_data/dec15_nonfiltered_extracted_urls.csv")
 ## extract domains
 
 def get_domain(link):
@@ -46,7 +51,7 @@ common_domains = ['twitter.com', 'facebook.com', 'google.com', 'm.tech', 'm.sc',
 
 filtered_link = linkframe.loc[~linkframe['domain'].isin(common_domains)]
 
-filtered_link.to_csv("/home/phadke/ONR/ONR/lite_data/dec15_extracted_urls.csv")
+filtered_link.to_csv("/home/phadke/ONR/ONR/lite_data/dec15_filtered_extracted_urls.csv")
 
 agg_filtered = filtered_link.groupby(['author','domain']).size().reset_index().rename(columns={0:"count"})
 
