@@ -11,9 +11,11 @@ from twitter_scraper.scraper import create_url, get_params, create_headers, conn
 idlist = ["1346963316"]
 
 
-include_parties = ['BJP', 'INC']
+#include_parties = ['DMK', 'AAP', 'AIADMK', 'SP', 'GOV', 'ABVP', 'NCP', 'TRS', 'BJD', 'SHIV SENA']
 
-data = pd.read_csv("/home/phadke/ONR/ONR/data_collection/sample_data_dec_14_1.csv", header=0)
+include_parties = ['AAP']
+
+data = pd.read_csv("/home/phadke/ONR/ONR/lite_data/india_July_21.csv", header=0)
 
 add_on = False
 sample_size = 5000
@@ -34,7 +36,7 @@ if to_sample:
     sample_data.to_csv("/home/phadke/ONR/ONR/data_collection/sample_data_dec_13.csv")
     
 else:
-    sample_data = data
+    sample_data = data.loc[data['party'].isin(include_parties)]
 
 for idx, row in sample_data.iterrows():
     time.sleep(1)
