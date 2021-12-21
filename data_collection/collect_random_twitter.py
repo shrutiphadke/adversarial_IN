@@ -13,7 +13,7 @@ idlist = ["1346963316"]
 
 #include_parties = ['DMK', 'AAP', 'AIADMK', 'SP', 'GOV', 'ABVP', 'NCP', 'TRS', 'BJD', 'SHIV SENA']
 
-include_parties = ['AAP']
+include_parties = ['DMK', 'AIADMK']
 
 data = pd.read_csv("/home/phadke/ONR/ONR/lite_data/india_July_21.csv", header=0)
 
