@@ -6,7 +6,17 @@ __pycache__/
 # C extensions
 *.so
 
-# Distribution / packaging
+# files to ignore
+*.out
+/big_data/
+/data_collection/*.csv
+/data_processing/*.csv
+/test_codes/*.csv
+/data_collection/*.gexf
+/data_processing/*.gexf
+/test_codes/*.gexf
+
+# Distribution / packaging/
 .Python
 build/
 develop-eggs/
