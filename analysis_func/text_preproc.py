@@ -14,7 +14,7 @@ from bs4 import BeautifulSoup
 #text preproessing - filter engligh, hindi, marathi stop words, remove puncts, hash, mentions, urls, weird spaces etc.
 stopwords = []
 
-stopwordfiles = glob.glob("../lite_data/stopwords/*.txt")
+stopwordfiles = glob.glob("/home/phadke/ONR/ONR/lite_data/stopwords/*.txt")
 for s in stopwordfiles:
     with open(s, "r") as sfile:
         for line in sfile:

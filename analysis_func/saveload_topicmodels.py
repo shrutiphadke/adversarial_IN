@@ -7,7 +7,7 @@ from gensim import models
 
 
 def save_modelanddata(model, id2word, corpus, foldername, partyname):
-    basepath = "./intermediate_models/"
+    basepath = "/home/phadke/ONR/ONR/intermediate_models/"
     newfolder = basepath + foldername
     if not os.path.exists(newfolder):
         os.makedirs(newfolder)
@@ -27,9 +27,9 @@ def save_modelanddata(model, id2word, corpus, foldername, partyname):
         
         
 def load_modelanddata(foldername, partyname):
-    basepath = "./intermediate_models/"
+    basepath = "/home/phadke/ONR/ONR/intermediate_models/"
     newfolder = basepath + foldername
-    modelpath = newfolder + partyname + "_model"
+    modelpath = newfolder + partyname + "_model.model"
     model = models.LdaModel.load(modelpath)
     
     id2wordpath = newfolder + partyname + "_id2word.pkl"

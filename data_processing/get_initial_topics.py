@@ -39,7 +39,10 @@ for d in datafiles:
                 
 final_files = defaultdict(list)
 for p in pcount:
-    final_files[p] = sample(pcount[p], 430)
+    try:
+        final_files[p] = sample(pcount[p], 1000)
+    except:
+        final_files[p] = sample(pcount[p], 430)
     
     
 #read randomly sampled data into a dataframe
@@ -70,6 +73,13 @@ for p in final_files.keys():
                 
 frame = pd.DataFrame(rowlist, columns=['screen_name','text','party', 'language'])
 frame = frame.dropna(subset=['text'])
+
+def startwithRT(text):
+    if text.startswith("RT "):
+        return 1
+    
+frame['is_RT'] = frame['text'].parallel_apply(lambda x: startwithRT(x))
+frame = frame.loc[frame['is_RT']!=1]
 
 print("cleaning data")
 #text preproessing - filter engligh, hindi, marathi stop words, remove puncts, hash, mentions, urls, weird spaces etc.
@@ -106,19 +116,22 @@ for i in range(len(tokes)):
 
 
 print("modeling topics")
-savefoldername = "ldamodels/" + str(datetime.datetime.now().strftime("%Y%m%d_%H%M")) + "/"
 
-BJP_id2word, BJP_corpus = prepare_corp(BJP_data)
-BJP_model = topicmodel(10, BJP_corpus, BJP_id2word)
-print("saving BJP model and data in", savefoldername)
-save_modelanddata(BJP_model, BJP_id2word, BJP_corpus, savefoldername, "BJP")
+topic_nums = [2, 4, 5, 6, 8, 10]
+for tn in topic_nums:
+    savefoldername = "ldamodels/" + str(datetime.datetime.now().strftime("%Y%m%d_%H%M")) + "/"
 
-INC_id2word, INC_corpus = prepare_corp(INC_data)
-INC_model = topicmodel(10, INC_corpus, INC_id2word)
-print("saving INC model and data in", savefoldername)
-save_modelanddata(INC_model, INC_id2word, INC_corpus, savefoldername, "INC")
+    BJP_id2word, BJP_corpus = prepare_corp(BJP_data)
+    BJP_model = topicmodel(tn, BJP_corpus, BJP_id2word)
+    print("saving BJP model and data in", savefoldername)
+    save_modelanddata(BJP_model, BJP_id2word, BJP_corpus, savefoldername, "BJP")
 
-AAP_id2word, AAP_corpus = prepare_corp(AAP_data)
-AAP_model = topicmodel(10, AAP_corpus, AAP_id2word)
-print("saving AAP model and data in", savefoldername)
-save_modelanddata(AAP_model, AAP_id2word, AAP_corpus, savefoldername, "AAP")
+    INC_id2word, INC_corpus = prepare_corp(INC_data)
+    INC_model = topicmodel(tn, INC_corpus, INC_id2word)
+    print("saving INC model and data in", savefoldername)
+    save_modelanddata(INC_model, INC_id2word, INC_corpus, savefoldername, "INC")
+
+    AAP_id2word, AAP_corpus = prepare_corp(AAP_data)
+    AAP_model = topicmodel(tn, AAP_corpus, AAP_id2word)
+    print("saving AAP model and data in", savefoldername)
+    save_modelanddata(AAP_model, AAP_id2word, AAP_corpus, savefoldername, "AAP")
