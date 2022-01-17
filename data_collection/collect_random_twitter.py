@@ -13,16 +13,23 @@ idlist = ["1346963316"]
 
 #include_parties = ['DMK', 'AAP', 'AIADMK', 'SP', 'GOV', 'ABVP', 'NCP', 'TRS', 'BJD', 'SHIV SENA']
 
-include_parties = ['DMK', 'AIADMK']
+include_parties = ['BJP', 'INC']
 
 data = pd.read_csv("/home/phadke/ONR/ONR/lite_data/india_July_21.csv", header=0)
 
-add_on = False
-sample_size = 5000
-to_sample = False
+add_on = True
+sample_size = 2000
+to_sample = True
 
 if add_on:
-    completed_collection = pd.read_csv("/home/phadke/ONR/ONR/data_collection/sample_data_dec_7.csv", header=0)
+    
+    completed_account_files = glob.glob("/home/phadke/ONR/ONR/data_collection/sample_data_*.csv")
+    cflist = []
+    for c in completed_account_files:
+        temp_f = pd.read_csv(c, header=0)
+        cflist.append(temp_f)
+        
+    completed_collection = pd.concat(cflist)
     completed_screens = completed_collection['screen_name'].tolist()
     data = data.loc[~data['screen_name'].isin(completed_screens)]
 
@@ -33,7 +40,7 @@ if to_sample:
 
     sample_data = pd.concat([sample_data_bjp,sample_data_inc])
 
-    sample_data.to_csv("/home/phadke/ONR/ONR/data_collection/sample_data_dec_13.csv")
+    sample_data.to_csv("/home/phadke/ONR/ONR/data_collection/sample_data_Jan_12.csv")
     
 else:
     sample_data = data.loc[data['party'].isin(include_parties)]
