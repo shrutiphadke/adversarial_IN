@@ -40,7 +40,7 @@ if to_sample:
 
     sample_data = pd.concat([sample_data_bjp,sample_data_inc])
 
-    sample_data.to_csv("/home/phadke/ONR/ONR/data_collection/sample_data_Jan_12.csv")
+    sample_data.to_csv("/home/phadke/ONR/ONR/data_collection/sample_data_Jan_17.csv")
     
 else:
     sample_data = data.loc[data['party'].isin(include_parties)]

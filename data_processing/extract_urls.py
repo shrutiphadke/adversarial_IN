@@ -16,18 +16,22 @@ for d in datafiles:
     if counter%100==0:
         print(counter)
     counter+=1
-    splitfilename = d.replace(".csv", "").split("_")
-    party = splitfilename[len(splitfilename)-1]
-    author = splitfilename[len(splitfilename)-2]
-    with open(d, "r") as jsonfile:
+    try:
+        splitfilename = d.replace(".csv", "").split("_")
+        party = splitfilename[len(splitfilename)-1]
+        author = splitfilename[len(splitfilename)-2]
+        with open(d, "r") as jsonfile:
 
-        for line in jsonfile:
-            job= json.loads(line)
-            if "entities" in job.keys():
-                if "urls" in job["entities"]:
-                    for u in job["entities"]["urls"]:
-                        if "expanded_url" in u:
-                            linkframe = linkframe.append({"party":party, "link":u["expanded_url"], "author":author}, ignore_index=True)
+            for line in jsonfile:
+                job= json.loads(line)
+                if "entities" in job.keys():
+                    if "urls" in job["entities"]:
+                        for u in job["entities"]["urls"]:
+                            if "expanded_url" in u:
+                                linkframe = linkframe.append({"party":party, "link":u["expanded_url"], "author":author}, ignore_index=True)
+                                
+    except:
+        fakevar = 0
 
 
 #print(linkframe.head())
