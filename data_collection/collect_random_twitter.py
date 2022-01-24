@@ -34,13 +34,17 @@ if add_on:
     data = data.loc[~data['screen_name'].isin(completed_screens)]
 
 if to_sample:
+    
+    sample_data_bjp = data.loc[data['party']=='BJP']#.sample(sample_size)
+    sample_data_inc = data.loc[data['party']=='INC']#.sample(sample_size)
+    
 
-    sample_data_bjp = data.loc[data['party']=='BJP'].sample(sample_size)
-    sample_data_inc = data.loc[data['party']=='INC'].sample(sample_size)
+    sample_data_bjp = data.loc[data['party']=='BJP'].sample(min(sample_size, len(sample_data_bjp)))
+    sample_data_inc = data.loc[data['party']=='INC'].sample(min(sample_size, len(sample_data_inc)))
 
     sample_data = pd.concat([sample_data_bjp,sample_data_inc])
 
-    sample_data.to_csv("/home/phadke/ONR/ONR/data_collection/sample_data_Jan_17.csv")
+    sample_data.to_csv("/home/phadke/ONR/ONR/data_collection/sample_data_Jan_24.csv")
     
 else:
     sample_data = data.loc[data['party'].isin(include_parties)]
