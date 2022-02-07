@@ -8,14 +8,14 @@
     "text": "shruti"
   },
   "text": {
-    "more": "This viz represents common domain sharing netowrk on Indian political Twitter",
-    "intro": "This viz represents common domain sharing netowrk on Indian political Twitter",
+    "more": "Coordinated message sharing on Indian political twitter",
+    "intro": "Coordinated message sharing on Indian political twitter",
     "title": "common domain sharing India"
   },
   "legend": {
-    "edgeLabel": "common users",
+    "edgeLabel": "coordinated_messages",
     "colorLabel": "party inclination",
-    "nodeLabel": "domains"
+    "nodeLabel": "politicians"
   },
   "features": {
     "search": true,
