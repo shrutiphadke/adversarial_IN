@@ -44,7 +44,7 @@ if to_sample:
 
     sample_data = pd.concat([sample_data_bjp,sample_data_inc])
 
-    sample_data.to_csv("/home/phadke/ONR/ONR/data_collection/sample_data_Jan_24.csv")
+    sample_data.to_csv("/home/phadke/ONR/ONR/data_collection/sample_data_Jan_25.csv")
     
 else:
     sample_data = data.loc[data['party'].isin(include_parties)]
@@ -56,7 +56,7 @@ for idx, row in sample_data.iterrows():
     party=row['party']
     state=row['state']
     
-    fname = "/home/phadke/ONR/ONR/big_data/Twitter/" + cid+"_"+screen_name+"_"+party+".csv"
+    fname = "/data/shruti/ONR/big_data/Twitter/" + cid+"_"+screen_name+"_"+party+".csv"
     
     
     start_time="2020-05-01T01:00:00Z"
